@@ -11,6 +11,7 @@
     <modules>
         <module>daisyday-web-mail</module>
         <module>daisyday-web-hadoop</module>
+        <module>daisyday-project-elasticsearch</module>
     </modules>
     <properties>
     <spring.version.springboot>2.1.7.RELEASE</spring.version.springboot>
