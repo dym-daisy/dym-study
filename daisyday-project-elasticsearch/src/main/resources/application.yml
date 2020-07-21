@@ -51,6 +51,8 @@ management:
   health:
     mail:
       enabled: false
+    elasticsearch:
+      enabled: false
 # INFO ENDPOINT CONFIGURATION
 info:
   java:

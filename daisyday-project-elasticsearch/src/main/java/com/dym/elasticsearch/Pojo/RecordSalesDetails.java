@@ -27,7 +27,6 @@ public class RecordSalesDetails implements Serializable {
      * @author: lying
      * @time: 2019-02-25 14:03:54
      */
-    @Field
     private String detailId;
 
     /**
@@ -49,9 +48,7 @@ public class RecordSalesDetails implements Serializable {
      * @author: lying
      * @time: 2019-02-25 14:03:54
      */
-    @Field( type = FieldType.Date,
-            format = DateFormat.custom,pattern = "yyyy-MM-dd HH:mm:ss"
-    )
+    @Field( type = FieldType.Date, format = DateFormat.custom,pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date payDate;
 
