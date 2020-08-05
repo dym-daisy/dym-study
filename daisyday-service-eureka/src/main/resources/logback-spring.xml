@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+scan：当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true。
+scanPeriod：设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒当scan为true时，此属性生效。默认的时间间隔为1分钟。
+debug：当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。
+-->
+<configuration scan="false" scanPeriod="60 seconds" debug="false">
+    <springProperty scope="context" name="APP_NAME" source="spring.application.name" defaultValue="app_name"/>
+    <!-- 彩色日志依赖的渲染类 -->
+    <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+    <conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+    <conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+    <property name="appName" value="${APP_NAME}"/>
+
+    <property name="LOG_HOME" value="D:/logs/default" />
+    <property name="log.level" value="DEBUG" />
+    <property name="log.max.history" value="2" />
+    <property name="log.max.fileSize" value="2MB" />
+
+    <property name="CONSOLE_LOG_PATTERN" value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:-}){magenta} %clr{faint} %clr([%10.10t]){faint} %clr(%-35.35logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
+    <!--<property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level [%15.15thread] %36.36(%logger{36}): %msg %n"/>-->
+    <!-- 定义日志的根目录 -->
+    <springProfile name="dev">
+        <!--日志保存目录-->
+        <property name="LOG_HOME" value="D:/logs/dev" />
+        <!--日志输出级别-->
+        <property name="log.level" value="DEBUG" />
+        <!--日志保存最大天数-->
+        <property name="log.max.history" value="2" />
+        <!--日志最大保存大小-->
+        <property name="log.max.fileSize" value="2MB" />
+    </springProfile>
+    <springProfile name="t1,t2,t3">
+        <property name="LOG_HOME" value="/root/logs/test" />
+        <property name="log.level" value="INFO" />
+        <property name="log.max.history" value="31" />
+        <property name="log.max.fileSize" value="50MB" />
+        <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level [%15.15thread] %36.36(%logger{36}): %msg %n"/>
+    </springProfile>
+    <springProfile name="p1,p2,p3">
+        <property name="LOG_HOME" value="/root/logs/pro" />
+        <property name="log.level" value="INFO" />
+        <property name="log.max.history" value="31" />
+        <property name="log.max.fileSize" value="50MB" />
+        <property name="CONSOLE_LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5level [%15.15thread] %36.36(%logger{36}): %msg %n"/>
+    </springProfile>
+    <!--输出到控制台 -->
+    <appender name="console_out" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+    <!--
+    输出到文件
+    滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件
+    -->
+    <appender name="app_error_appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${appName}_error.log</file>
+        <!--
+        当发生滚动时，决定 RollingFileAppender 的行为，涉及文件移动和重命名
+        TimeBasedRollingPolicy： 最常用的滚动策略，它根据时间来制定滚动策略，既负责滚动也负责出发滚动。
+        -->
+        <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 日志归档 -->
+            <fileNamePattern>${LOG_HOME}/${appName}/error-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxFileSize>${log.max.fileSize}</maxFileSize>
+            <maxHistory>${log.max.history}</maxHistory>
+        </rollingPolicy>
+        <!-- 日志输出格式： -->
+        <encoder charset="UTF-8" class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+        </encoder>
+        <!-- 过滤日志 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>  <!-- 如果命中就禁止这条日志 -->
+            <onMismatch>DENY</onMismatch>  <!-- 如果没有命中就使用这条规则 -->
+        </filter>
+    </appender>
+
+    <appender name="app_info_appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${appName}_info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${appName}/info-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxFileSize>${log.max.fileSize}</maxFileSize>
+            <maxHistory>${log.max.history}</maxHistory>
+        </rollingPolicy>
+
+        <encoder charset="UTF-8" class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="app_debug_appender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_HOME}/${appName}_debug.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/${appName}/debug-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+            <maxFileSize>${log.max.fileSize}</maxFileSize>
+            <maxHistory>${log.max.history}</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8" class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>${CONSOLE_LOG_PATTERN}</Pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <!--
+        <loger>用来设置某一个包或者具体的某一个类的日志打印级别、以及指定<appender>。
+        <loger>仅有一个name属性，一个可选的level和一个可选的addtivity属性。
+        name:用来指定受此loger约束的某一个包或者具体的某一个类。
+        level:用来设置打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL 和 OFF，还有一个特俗值INHERITED或者同义词NULL，代表强制执行上级的级别。如果未设置此属性，那么当前loger将会继承上级的级别。
+        addtivity:是否向上级loger传递打印信息。默认是true。
+		logger主要用于存放日志对象，也可以定义日志类型、级别
+		name：表示匹配的logger类型前缀，也就是包的前半部分
+		level：要记录的日志级别，包括 TRACE < DEBUG < INFO < WARN < ERROR
+		additivity：作用在于children-logger是否使用 rootLogger配置的appender进行输出，
+		false：表示只用当前logger的appender-ref，true：
+		表示当前logger的appender-ref和rootLogger的appender-ref都有效
+    -->
+    <logger name="org.springframework" level="info" additivity="false"/>
+    <!-- root与logger是父子关系，没有特别定义则默认为root，任何一个类只会和一个logger对应，
+    要么是定义的logger，要么是root，判断的关键在于找到这个logger，然后判断这个logger的appender和level。
+    root节点是必选节点，用来指定最基础的日志输出级别，只有一个level属性。
+    level:用来设置打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL 和 OFF，不能设置为INHERITED或者同义词NULL。
+    TRACE < DEBUG < INFO < WARN < ERROR < FATAL
+    默认是DEBUG。
+    可以包含零个或多个元素，标识这个appender将会添加到这个loger。-->
+    <root level="${log.level}">
+        <appender-ref ref="console_out" />
+        <appender-ref ref="app_error_appender" />
+        <appender-ref ref="app_info_appender" />
+        <appender-ref ref="app_debug_appender" />
+    </root>
+</configuration> 
