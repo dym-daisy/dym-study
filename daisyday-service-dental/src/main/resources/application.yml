@@ -1,0 +1,122 @@
+server:
+  port: 6003
+spring:
+
+  application:
+    name: sunsoft-app-service-polymer-dev
+  jackson:
+    default-property-inclusion: non_null  # JSON返回值去除null和空字段
+    serialization:
+      write-dates-as-timestamps: true  # JSON返回时间为时间戳格式
+  datasource:
+    druid:
+      db1:
+        ##########################  mysql   ##########################
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        username: sunsoft_test
+        password: TK+itG2HCHCFqhcvASZue+yLCc82prbZ7xbmvF0noBpgktR8ckFXw41c6baZokvsfdFRaxwsEXo6pUkE3m2oag==
+        #172.17.0.34:65533
+        url: jdbc:mysql://sh-cdb-kxf1rrc4.sql.tencentcdb.com:62150/xiaoyi_test?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+        connection-properties: config.decrypt=true;publicKey=${spring.datasource.druid.db1.publicKey};password=${spring.datasource.druid.db1.password}
+        publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBALcTBsqrPyU9JIYMTxb4MuzuBo5H1IosRR8e0E6uQc/tS8WSrsEI20MA1rsMeMDetRHHjxJ1HUCAgKtfcA0280sCAwEAAQ==
+        ##########################  druid_pool_config ##########################
+        initial-size: 2                                        #连接池建立时创建的初始化连接数
+        max-active: 5                                          #连接池中最大的活跃连接数
+        min-idle: 3                                            #连接池中最小的活跃连接数
+        max-wait: 60000                                        #配置获取连接等待超时的时间
+        pool-prepared-statements: true                         #打开PSCache，并且指定每个连接上PSCache的大小
+        max-pool-prepared-statement-per-connection-size: 20    #打开PSCache，并且指定每个连接上PSCache的大小
+        test-on-borrow: false                                  #是否在获得连接后检测其可用性
+        test-on-return: false                                  #是否在连接放回连接池后检测其可用性
+        test-while-idle: true                                  #是否在连接空闲一段时间后检测其可用性
+        passwordCallbackClassName: com.sunsoft.app.polymer.config.DbPasswordCallback
+        filter:
+          config:
+            enabled: true
+      db2:
+        ##########################  mysql   ##########################
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.jdbc.Driver
+        username: core_test
+        password: DkCZVFiqDGXfLL2SbV2aFqMIBFFFEJBE71HnsJDY1V/IHXFGceB/3glIJmNmqP3RpBR9wv7JJecMe/7fLyJgjw==
+        #主：172.17.0.9:3306
+        url: jdbc:mysql://sh-cdb-87po6krs.sql.tencentcdb.com:62816/a_top_one_test?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true
+        connection-properties: config.decrypt=true;publicKey=${spring.datasource.druid.db2.publicKey};password=${spring.datasource.druid.db2.password}
+        publicKey: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAIICURl/D62Wsj4JjxrFDtsZHXz3Zo6MUX+A+WmtcykkVn9q8idJwsvbi672dEKBcDV+j+X4TX5qiUYkaG/vtysCAwEAAQ==
+        ##########################  druid_pool_config ##########################
+        initial-size: 5                                        #连接池建立时创建的初始化连接数
+        max-active: 20                                         #连接池中最大的活跃连接数
+        min-idle: 5                                            #连接池中最小的活跃连接数
+        max-wait: 60000                                        #配置获取连接等待超时的时间
+        pool-prepared-statements: true                         #打开PSCache，并且指定每个连接上PSCache的大小
+        max-pool-prepared-statement-per-connection-size: 20    #打开PSCache，并且指定每个连接上PSCache的大小
+        test-on-borrow: false                                  #是否在获得连接后检测其可用性
+        test-on-return: false                                  #是否在连接放回连接池后检测其可用性
+        test-while-idle: true                                  #是否在连接空闲一段时间后检测其可用性
+        passwordCallbackClassName: com.sunsoft.app.polymer.config.DbPasswordCallback
+        filter:
+          config:
+            enabled: true
+  servlet:
+    multipart:
+#      50MB
+      max-file-size: 52428800
+      max-request-size: 52428800
+  redis:
+    host: 122.152.195.7
+    password: jixiang
+    port: 6379
+    database: 0
+    timeout: 60s  # 数据库连接超时时间，2.0 中该参数的类型为Duration，这里在配置的时候需要指明单位
+    # 连接池配置，2.0中直接使用jedis或者lettuce配置连接池
+    jedis:
+      pool:
+        # 最大空闲连接数
+        max-idle: 20
+        # 最小空闲连接数
+        min-idle: 10
+        # 等待可用连接的最大时间，负数为不限制
+        max-wait: 30000s
+        # 最大活跃连接数，负数为不限制
+        max-active: -1
+  profiles:
+    active: dev
+  mvc:
+    static-path-pattern: /static/**
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://jixiangtest:jixiangtest2019@localhost:7001/eureka
+    healthcheck:
+      enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        # spring-boot-starter-actuator 2.0版本以上得这么配置，将接口暴露出来，如果要暴露全部节点使用include: "*"
+        include: refresh,health,info
+# INFO ENDPOINT CONFIGURATION
+info:
+  java:
+    version: ${java.version}
+  app.name: ${spring.application.name}
+  company.name: www.toponebuyer.com
+  build.artifactId: ${project.artifactId}
+  build.version: ${project.version}
+#pagehelper分页插件
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+#application
+service:
+  application:
+    name_external: sunsoft-app-service-external-dev
+    name_openapi_resmq: sunsoft-openapi-service-resmq-dev
