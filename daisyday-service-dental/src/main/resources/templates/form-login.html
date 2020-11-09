@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="Author" content="吟码@之马工场（http://www.zhimawork.com）" />
+		<title>手机号短信验证登录 - WeUI之马版</title>
+		<link rel="stylesheet" type="text/css" href="/static/css/weui-css/weui-basic.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/weui-css/weui-form.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/weui-css/weui-btn.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/weui-css/weui-dialog.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/weui-css/weui-tips.css" />
+		<script src="/static/js/weui/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/js/weui/weui-tips.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+	<div class="container">
+		<div class="weui-form">
+			<div class="weui-form__text-area">
+				<h2 class="weui-form__title">登录</h2>
+			</div>
+			<div class="weui-form__control-area">
+				<div class="weui-cells__group weui-cells__group_form">
+					<div class="weui-cells weui-cells_form">
+						<div class="weui-cell weui-cell_active">
+							<div class="weui-cell__hd"><label class="weui-label">账号</label></div>
+							<div class="weui-cell__bd">
+								<input class="weui-input" placeholder="请输入账号" value="" id="account" />
+							</div>
+						</div>
+						<div class="weui-cell weui-cell_active">
+							<div class="weui-cell__hd"><label class="weui-label">密码</label></div>
+							<div class="weui-cell__bd">
+								<input class="weui-input" type="password" placeholder="请输入密码" value="" id="password" />
+							</div>
+							<div class="weui-cell__ft">
+								<img src="/static/images/icon/eye_close.png" alt="密码可见" style="height: 26px;" id="btn_showPwd">
+							</div>
+						</div>
+						<div class="weui-cell weui-cell_active weui-cell_vcode">
+							<div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
+							<div class="weui-cell__bd">
+								<input autofocus class="weui-input" type="text" pattern="[0-9]*" id="verification_code" placeholder="请输入验证码"
+									   maxlength="6" />
+							</div>
+							<div class="weui-cell__ft">
+								<img src="/static/images/demo/code.jpg" alt="验证码图片">
+							</div>
+						</div>
+					</div>
+					<!--<div class="weui-cells__tips" style="text-align: right;"><a class="weui-link" href="javascript:">忘记密码?</a></div>-->
+				</div>
+			</div>
+			<div class="weui-form__opr-area">
+				<a class="weui-btn weui-btn_primary" href="javascript:" id="btn_login">登录</a>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(function() {
+			// 控制密码的可见与否
+			var isShowPwd = false;
+			$('#btn_showPwd').on('click', function() {
+				isShowPwd = !isShowPwd;
+				if (isShowPwd) {
+					$(this).attr('src', '/static/images/icon/eye_open.png');
+					$('#password').attr('type', 'text');
+				} else {
+					$(this).attr('src', '/static/images/icon/eye_close.png');
+					$('#password').attr('type', 'password');
+				}
+			});
+			// 必填项的错误提示
+			$('#btn_login').on('click', function() {
+				if ($('#account').val() === '') {
+					showToast('账号不能为空', 'warn');
+					return false;
+				};
+				if ($('#password').val() === '') {
+					showToast('密码不能为空', 'warn');
+					return false;
+				};
+				if ($('#verification_code').val() === '') {
+					showToast('验证码不能为空', 'warn');
+					return false;
+				};
+				var formData = new FormData($("#form_01")[0]);
+				$(function(){
+					$.ajax({
+						//请求方式
+						type : "POST",
+						//请求的媒体类型
+						contentType: "application/x-www-form-urlencoded",
+						//请求地址
+						url : "/user/login",
+						//数据，json字符串
+						data :{
+							"account":$("#account").val(),
+							"password":$("#password").val(),
+							"verification_code":$("#verification_code").val()
+						},
+						success : function(result) {
+							// alert(result.info);
+						},
+						//请求失败，包含具体的错误信息
+						error : function(e){
+							 // alert("service error");
+						}
+					});
+				});
+			})
+		})
+	</script>
+	</body>
+</html>

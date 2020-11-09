@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<meta name="Author" content="吟码@之马工场（http://www.zhimawork.com）" />
+		<title>手机号短信验证登录 - WeUI之马版</title>
+		<link rel="stylesheet" type="text/css" href="/static/css/weui-css/weui-basic.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/weui-css/weui-form.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/weui-css/weui-btn.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/weui-css/weui-media-box.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/weui-css/weui-dialog.css" />
+		<link rel="stylesheet" type="text/css" href="/static/css/weui-css/weui-tips.css" />
+		<script src="/static/js/weui/zepto.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="/static/js/weui/weui-tips.js" type="text/javascript" charset="utf-8"></script>
+		<style>
+			.profile_photo {
+				position: relative;
+				margin-right: 10px;
+			}
+			.profile_photo img {
+				width: 50px;
+				display: block;
+			}
+		</style>
+	</head>
+	<body>
+	<div class="container">
+		<div class="weui-tab">
+			<div class="weui-tab__panel">
+				<div class="weui-cells__title">B</div>
+				<div class="weui-cells">
+					<div class="weui-cell weui-cell_active">
+						<div class="weui-cell__hd profile_photo">
+							<img src="images/_demo/icon_head.png">
+						</div>
+						<div class="weui-cell__bd">
+							<p>拜仁</p>
+						</div>
+					</div>
+					<div class="weui-cell weui-cell_active">
+						<div class="weui-cell__hd profile_photo">
+							<img src="images/_demo/icon_head.png">
+						</div>
+						<div class="weui-cell__bd">
+							<p>拜月 <img src="./images/_demo/icon_online.png" style="width: 15px;"></p>
+						</div>
+					</div>
+					<div class="weui-cell weui-cell_active">
+						<div class="weui-cell__hd profile_photo">
+							<img src="images/_demo/icon_head.png">
+						</div>
+						<div class="weui-cell__bd">
+							<p>半仙儿</p>
+						</div>
+					</div>
+				</div>
+				<div class="weui-cells__title">C</div>
+				<div class="weui-cells">
+					<div class="weui-cell weui-cell_active">
+						<div class="weui-cell__hd profile_photo">
+							<img src="images/_demo/icon_head.png">
+						</div>
+						<div class="weui-cell__bd">
+							<p>层林</p>
+						</div>
+					</div>
+					<div class="weui-cell weui-cell_active">
+						<div class="weui-cell__hd profile_photo">
+							<img src="images/_demo/icon_head.png">
+						</div>
+						<div class="weui-cell__bd">
+							<p>尘飞扬</p>
+						</div>
+					</div>
+					<div class="weui-cell weui-cell_active">
+						<div class="weui-cell__hd profile_photo">
+							<img src="images/_demo/icon_head.png">
+						</div>
+						<div class="weui-cell__bd">
+							<p>初北上</p>
+						</div>
+					</div>
+				</div>
+				<div class="weui-cells__title">D</div>
+				<div class="weui-cells">
+					<div class="weui-cell weui-cell_active">
+						<div class="weui-cell__hd profile_photo">
+							<img src="images/_demo/icon_head.png">
+						</div>
+						<div class="weui-cell__bd">
+							<p>豆荚儿</p>
+						</div>
+					</div>
+				</div>
+				<div class="weui-cells__title">B</div>
+				<div class="weui-cells">
+					<div class="weui-cell weui-cell_active">
+						<div class="weui-cell__hd profile_photo">
+							<img src="images/_demo/icon_head.png">
+						</div>
+						<div class="weui-cell__bd">
+							<p>拜仁</p>
+						</div>
+					</div>
+					<div class="weui-cell weui-cell_active">
+						<div class="weui-cell__hd profile_photo">
+							<img src="images/_demo/icon_head.png">
+						</div>
+						<div class="weui-cell__bd">
+							<p>拜月 <img src="./images/_demo/icon_online.png" style="width: 15px;"></p>
+						</div>
+					</div>
+					<div class="weui-cell weui-cell_active">
+						<div class="weui-cell__hd profile_photo">
+							<img src="images/_demo/icon_head.png">
+						</div>
+						<div class="weui-cell__bd">
+							<p>半仙儿</p>
+						</div>
+					</div>
+				</div>
+				<div class="weui-cells__title">C</div>
+				<div class="weui-cells">
+					<div class="weui-cell weui-cell_active">
+						<div class="weui-cell__hd profile_photo">
+							<img src="images/_demo/icon_head.png">
+						</div>
+						<div class="weui-cell__bd">
+							<p>层林</p>
+						</div>
+					</div>
+					<div class="weui-cell weui-cell_active">
+						<div class="weui-cell__hd profile_photo">
+							<img src="images/_demo/icon_head.png">
+						</div>
+						<div class="weui-cell__bd">
+							<p>尘飞扬</p>
+						</div>
+					</div>
+					<div class="weui-cell weui-cell_active">
+						<div class="weui-cell__hd profile_photo">
+							<img src="images/_demo/icon_head.png">
+						</div>
+						<div class="weui-cell__bd">
+							<p>初北上</p>
+						</div>
+					</div>
+				</div>
+				<div class="weui-cells__title">D</div>
+				<div class="weui-cells">
+					<div class="weui-cell weui-cell_active">
+						<div class="weui-cell__hd profile_photo">
+							<img src="images/_demo/icon_head.png">
+						</div>
+						<div class="weui-cell__bd">
+							<p>豆荚儿</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="weui-tabbar">
+				<div class="weui-tabbar__item">
+					<a href="./list-7.html">
+						<div style="display: inline-block; position: relative;">
+							<img src="./images/_demo/icon_message.png" alt="" class="weui-tabbar__icon">
+							<span class="weui-badge" style="position: absolute; top: -2px; right: -13px;">8</span>
+						</div>
+						<p class="weui-tabbar__label">微信</p>
+					</a>
+				</div>
+				<div class="weui-tabbar__item weui-bar__item_on">
+					<a href="./list-8.html">
+						<img src="./images/_demo/icon_contactbook_active.png" alt="" class="weui-tabbar__icon">
+						<p class="weui-tabbar__label">通讯录</p>
+					</a>
+				</div>
+				<div class="weui-tabbar__item">
+					<div style="display: inline-block; position: relative;">
+						<img src="./images/_demo/icon_discover.png" alt="" class="weui-tabbar__icon">
+						<span class="weui-badge weui-badge_dot" style="position: absolute; top: 0; right: -6px;"></span>
+					</div>
+					<p class="weui-tabbar__label">发现</p>
+				</div>
+				<div class="weui-tabbar__item">
+					<img src="./images/_demo/icon_me.png" alt="" class="weui-tabbar__icon">
+					<p class="weui-tabbar__label">我</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	</body>
+</html>

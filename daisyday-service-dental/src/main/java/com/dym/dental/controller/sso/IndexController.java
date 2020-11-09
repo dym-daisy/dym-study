@@ -15,11 +15,16 @@ public class IndexController {
 
 //    @RequestMapping("/")
 //    public String hello(){
-//        return  "index";
+//        return  "login";
 //    }
     @RequestMapping("/login")
     public String login(){
-        return  "login";
+        return  "form-login";
+    }
+
+    @RequestMapping("/login1")
+    public String login1(){
+        return  "list-1";
     }
 
 }

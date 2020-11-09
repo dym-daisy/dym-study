@@ -57,9 +57,14 @@
             <artifactId>bootbox.js</artifactId>
             <version>5.3.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.webjars.npm</groupId>
+            <artifactId>weui</artifactId>
+            <version>2.1.4</version>
+        </dependency>
     </dependencies>
     <build>
-        <finalName>sunsoft-app-service-polymer</finalName>
+        <finalName>daisyday-service-dental</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
