@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>欢迎使用</title>
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css" />
+    <meta charset="UTF-8"/>
+</head>
+<body>
+    <div id="app">
+        <h2 v-text="message+'！！！'"></h2>
+    </div>
+    <div id="app1">
+        <input type="button" value="单点击" @click="click1"/>
+        <input type="button" value="双点击" @dblclick="click1"/>
+    </div>
+    <div id="app2">
+        <input type="button" value="-" @click="click1"/>
+        <span>{{num}}</span>
+        <input type="button" value="+" @click="click2"/>
+    </div>
+    <div id="app3">
+        <input type="button" value="显示和隐藏图片" @click="changeShow"/>
+        <img v-show="isShow" src="../static/images/icon/eye_open.png" />
+
+    </div>
+    <div id="app4">
+        <input type="button" value="显示和隐藏" @click="changeShow"/>
+        <p v-if="isShow">我们要隐藏了</p>
+        <p v-show="isShow">我们要隐藏了.....</p>
+
+    </div>
+    <div id="app5">
+        <input type="button" value="显示和隐藏" @click="changeShow"/>
+        <img v-bind:src="imgUrl" v-show="isShow" />
+        <img :src="imgUrl" :title="imgTitle" v-show="isShow"/>
+
+    </div>
+
+    <div id="app6">
+       <ul>
+           <li v-for="(item,index) in paple">
+               <div>序号：{{index}}；姓名：{{item.name}}，年龄：{{item.age}}</div>
+           </li>
+
+       </ul>
+
+    </div>
+    <div id="app7">
+        <br>
+        <input type="button" value="增加列表" @click="add"/>
+        <input type="button" value="删除列表" @click="del"/>
+        <ul>
+            <li v-for="(item,index) in paple">
+                <div>序号：{{index}}；姓名：{{item.name}}，年龄：{{item.age}}</div>
+            </li>
+
+        </ul>
+
+    </div>
+
+    <div id="app8">
+        <br>
+        <input type="button" value="增加列表" @click="set()"/>
+        <input type="text" v-model="msg" @keyup.enter="show(msg)"/>
+        <h1>{{msg}}</h1>
+        <ul>
+            <li v-for="(item,index) in paple">
+                <div>序号：{{index}}；姓名：{{item.name}}，年龄：{{item.age}}</div>
+            </li>
+
+        </ul>
+
+    </div>
+</body>
+<script>
+    var app=new Vue({
+        el:"#app",
+        data:{
+            message: "你好世界"
+        }
+    });
+    var app1=new Vue({
+        el:"#app1",
+        data:{
+            message: "你好世界"
+        },
+        methods:{
+             click1:function(){
+                 alert("click")
+             }
+        }
+    });
+    var app2=new Vue({
+        el:"#app2",
+        data:{
+            num:1
+        },
+        methods:{
+            click1:function(){
+                if(this.num<=0){
+                 alert("不能再小了");
+                }else {
+                    this.num-=1;
+                }
+            },
+            click2:function(){
+                if(this.num>10){
+                    alert("不能再大了");
+                }else {
+                    this.num+=1;
+                }
+
+            }
+        }
+    });
+    var app3=new Vue({
+        el:"#app3",
+        data:{
+            isShow: false
+        },
+        methods:{
+            changeShow:function(){
+                 this.isShow=!this.isShow;
+            }
+        }
+    });
+    var app4=new Vue({
+        el:"#app4",
+        data:{
+            isShow: true
+        },
+        methods:{
+            changeShow:function(){
+                this.isShow=!this.isShow;
+            }
+        }
+    });
+    var app5=new Vue({
+        el:"#app5",
+        data:{
+            imgUrl: "../static/images/icon/eye_open.png",
+            imgTitle: "我是图片title",
+            isShow: false
+        },
+        methods:{
+            changeShow:function(){
+                this.isShow=!this.isShow;
+            }
+        }
+    });
+
+    var app6=new Vue({
+        el:"#app6",
+        data:{
+            paple:  [
+                {"name":"张三","age":"12"},
+                {"name":"里斯","age":"13"},
+                {"name":"许昌","age":"56"},
+            ]
+        },
+        methods:{
+            changeShow:function(){
+                this.isShow=!this.isShow;
+            }
+        }
+    });
+    var app7=new Vue({
+        el:"#app7",
+        data:{
+            paple:  [
+                {"name":"张三","age":"12"},
+                {"name":"里斯","age":"13"},
+                {"name":"阿谁的风景","age":"45"},
+            ]
+        },
+        methods:{
+            add:function(){
+                this.paple.push({"name":"许昌","age":"56"});
+            },
+            del:function(){
+                this.paple.shift();
+            }
+        }
+    });
+    var app8=new Vue({
+        el:"#app8",
+        data:{
+            msg: "asdfasdf",
+            paple:  [
+                {"name":"张三","age":"12"},
+                {"name":"里斯","age":"13"}
+
+            ]
+        },
+        methods:{
+            add:function(p1){
+                var aa='{"name":"'+p1+'","age":"13"}';
+                console.log('{"name":"'+p1+'","age":"13"}')
+                this.paple.push(aa);
+            },
+            del:function(){
+                this.paple.shift();
+            },
+            show:function(p1){
+                this.paple.push(p1);
+                console.log('{"name":"'+p1+'","age":"13"}')
+
+            },
+            set:function () {
+                this.msg="wo gai bain le";
+            }
+        }
+    });
+
+
+</script>
+</html>

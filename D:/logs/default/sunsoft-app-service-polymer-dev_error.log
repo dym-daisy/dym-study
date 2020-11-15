@@ -1,0 +1,2 @@
+[2m2020-11-15 10:34:10.544[0;39m [31mERROR[0;39m [35m1650[0;39m [2m[0;39m [2m[tartedMain][0;39m [36m.druid.pool.DruidAbstractDataSource[0;39m [2m:[0;39m load passwordCallback error : com.sunsoft.app.polymer.config.DbPasswordCallback
+[2m2020-11-15 10:35:02.426[0;39m [31mERROR[0;39m [35m4913[0;39m [2m[0;39m [2m[tartedMain][0;39m [36m.druid.pool.DruidAbstractDataSource[0;39m [2m:[0;39m load passwordCallback error : com.sunsoft.app.polymer.config.DbPasswordCallback

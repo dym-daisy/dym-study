@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>欢迎使用</title>
+    <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/axios/0.21.0/axios.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/3.3.5/css/bootstrap.min.css" />
+    <meta charset="UTF-8"/>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="message"/>
+        <input type="button" value="请求" @click="search_net"/>
+    </div>
+
+</body>
+<script>
+    var app=new Vue({
+        el:"#app",
+        data:{
+            message: "你好世界"
+        },
+        methods:{
+
+            search_net:function () {
+                that=this;
+                axios.get("https://www.top1buyer.com/sso/vipUser/nologin")
+                    .then(function (response) {
+                        console.log(response.data);
+                        that.message=response.data.info;
+                    })
+                    .catch(function (err) {
+                        console.log(err)
+                    })
+            }
+        }
+    });
+
+</script>
+</html>

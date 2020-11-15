@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class IndexController {
 
 
-//    @RequestMapping("/")
-//    public String hello(){
-//        return  "login";
-//    }
+    @RequestMapping("/")
+    public String hello(){
+        return  "vue_net";
+    }
     @RequestMapping("/login")
     public String login(){
         return  "form-login";
